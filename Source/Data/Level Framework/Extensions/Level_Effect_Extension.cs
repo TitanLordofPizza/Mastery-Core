@@ -12,11 +12,16 @@ namespace Mastery.Core.Data.Level_Framework.Extensions
         public UtilityCurve expCurve;
         public UtilityCurve ExpCurve { get => expCurve; set => expCurve = value; }
 
+        public bool isIgnored;
+        public bool IsIgnored { get => isIgnored; set => isIgnored = value; }
+
         public virtual void ExposeData()
         {
             Scribe_Deep.Look(ref titleCurve, "titleCurve");
 
             Scribe_Deep.Look(ref expCurve, "expCurve");
+
+            Scribe_Values.Look(ref isIgnored, "isIgnored");
         }
 
         public string MasteryCalculated(int Level, float Exp)

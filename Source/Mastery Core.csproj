@@ -83,7 +83,6 @@
     <Compile Include="Data\Level Framework\Data\Extensions\Level_Data_Extension.cs" />
     <Compile Include="Data\Level Framework\Data\Extensions\Level_Data_Float.cs" />
     <Compile Include="Data\Level Framework\Data\Extensions\Level_Data_Int.cs" />
-    <Compile Include="Data\Level Framework\Data\Extensions\Mastery_Mod_Extension.cs" />
     <Compile Include="Data\Level Framework\Data\Level_Data.cs" />
     <Compile Include="Data\Level Framework\Defs\LevelDef.cs" />
     <Compile Include="Data\Level Framework\Extensions\Level_Action_Extension.cs" />

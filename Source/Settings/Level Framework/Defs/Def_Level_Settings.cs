@@ -97,6 +97,19 @@ namespace Mastery.Core.Settings.Level_Framework.Defs
             return state;
         }
 
+        public bool ActiveOnThing(ThingWithComps thing, string defName, out TComp comp)
+        {
+            if (ActiveConfig(defName) == true)
+                if (ActiveOnThing(thing, out comp) == true)
+                    return true;
+            return ActiveOnThing(thing, out comp);
+        }
+
+        public bool ActiveConfig(string defName)
+        {
+            return HasConfig(defName) ? GetConfig(defName).IsIgnored : false;
+        }
+
         #endregion
 
         public override void ExposeData()

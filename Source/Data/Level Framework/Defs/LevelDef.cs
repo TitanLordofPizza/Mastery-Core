@@ -1,6 +1,4 @@
-﻿using System;
-
-using Verse;
+﻿using Verse;
 
 using Mastery.Core.Utility;
 
@@ -13,6 +11,9 @@ namespace Mastery.Core.Data.Level_Framework.Defs
 
         public UtilityCurve expCurve;
         public UtilityCurve ExpCurve { get => expCurve; set => expCurve = value; }
+
+        public bool isIgnored;
+        public bool IsIgnored { get => isIgnored; set => isIgnored = value; }
 
         public string MasteryCalculated(int Level, float Exp)
         {
