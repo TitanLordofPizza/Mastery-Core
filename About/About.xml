@@ -7,5 +7,6 @@
 	</supportedVersions>
 	<modVersion>0.0.1</modVersion>
 	<packageId>Mastery.Core</packageId>
-	<description>Mastery Core is a modular(ish) framework created to help create Mastery Related Mods.</description>	
+	<description>Mastery Core is a modular(ish) framework created to help create Mastery Related Mods.</description>
+	<url>https://github.com/TitanLordofPizza/Mastery-Core/releases/latest</url>
 </ModMetaData>
