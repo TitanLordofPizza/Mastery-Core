@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Mastery Core</name>
+	<author>Titan Lord of Pizza</author>
+	<supportedVersions>
+		<li>1.5</li>
+	</supportedVersions>
+	<modVersion>0.0.1</modVersion>
+	<packageId>Mastery.Core</packageId>
+	<description>Mastery Core is a modular(ish) framework created to help create Mastery Related Mods.</description>	
+</ModMetaData>

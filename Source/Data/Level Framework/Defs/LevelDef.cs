@@ -1,0 +1,27 @@
+﻿using System;
+
+using Verse;
+
+using Mastery.Core.Utility;
+
+namespace Mastery.Core.Data.Level_Framework.Defs
+{
+    public class LevelDef : Def, ILevel_Base
+    {
+        public UtilityCurve titleCurve;
+        public UtilityCurve TitleCurve { get => titleCurve; set => titleCurve = value; }
+
+        public UtilityCurve expCurve;
+        public UtilityCurve ExpCurve { get => expCurve; set => expCurve = value; }
+
+        public string MasteryCalculated(int Level, float Exp)
+        {
+            return $"Level: {Level}({Exp}/{ExpCalculated(Level)}) " + $"Mastery_Core_Level_Title{(int)TitleCurve.Evaluate(Level)}".Translate(); //Right after this would be the title
+        }
+
+        public float ExpCalculated(int Level)
+        {
+            return ExpCurve.Evaluate(Level);
+        }
+    }
+}
