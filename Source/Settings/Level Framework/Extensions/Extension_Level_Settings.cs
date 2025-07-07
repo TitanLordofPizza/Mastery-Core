@@ -10,7 +10,7 @@ using Mastery.Core.Settings.Level_Framework.Base;
 
 namespace Mastery.Core.Settings.Level_Framework.Extensions
 {
-    public class Extension_Level_Settings<TComp, TExtension> : Level_Settings where TComp : Level_Comp where TExtension : Level_Effect_Extension
+    public class Extension_Level_Settings<TComp, TExtension> : Level_Settings where TComp : Level_Comp where TExtension : Level_Effect_Extension, IDuplicable<TExtension>
     {
         public TExtension ExtensionBase;
 
@@ -45,22 +45,28 @@ namespace Mastery.Core.Settings.Level_Framework.Extensions
 
             if (defName.NullOrEmpty() == false)
             {
-                Level_Config<TExtension> configValue = null;
-                Configs?.TryGetValue(defName, out configValue);
+                Level_Config<TExtension> config = null;
+                Configs?.TryGetValue(defName, out config);
 
-                if (configValue != null && configValue.Override == true)
-                    extension = configValue.Value;
+                if (config?.Value != null && config.Override == true)
+                {
+                    extension = config.Value;
+                }
                 else
                 {
                     Def def = null;
                     tempDefs?.TryGetValue(defName, out def);
 
                     if (def != null)
+                    {
                         extension = def.GetModExtension<TExtension>();
+                    }
                 }
 
                 if (extension == null)
+                {
                     extension = ExtensionBase;
+                }
             }
             else
             {
@@ -79,8 +85,8 @@ namespace Mastery.Core.Settings.Level_Framework.Extensions
         {
             Def def = null;
             tempDefs?.TryGetValue(defName, out def);
-            
-            if(def != null)
+
+            if (def != null)
             {
                 return def.LabelCap == null ? base.GetLabelCap(defName) : def.LabelCap;
             }
@@ -94,7 +100,7 @@ namespace Mastery.Core.Settings.Level_Framework.Extensions
 
         public bool ActiveOnThing(ThingWithComps thing)
         {
-            return Active && thing.HasComp<Level_Comp_Manager>() && thing.GetComp<Level_Comp_Manager>().Comps.ContainsKey(LevelKey);
+            return Active && thing != null && thing.HasComp<Level_Comp_Manager>() && thing.GetComp<Level_Comp_Manager>().Comps.ContainsKey(LevelKey);
         }
 
         public bool ActiveOnThing(ThingWithComps thing, out TComp comp)
@@ -113,17 +119,18 @@ namespace Mastery.Core.Settings.Level_Framework.Extensions
             return state;
         }
 
-        public bool ActiveOnThing(ThingWithComps thing, string defName, out TComp comp) 
+        public bool ActiveOnThing(ThingWithComps thing, string defName, out TComp comp)
         {
+            var activeOnThing = ActiveOnThing(thing, out comp);
+
             if (ActiveConfig(defName) == true)
-                if (ActiveOnThing(thing, out comp) == true)
-                    return true;
-            return ActiveOnThing(thing, out comp);
+                return activeOnThing;
+            return false;
         }
 
         public bool ActiveConfig(string defName)
         {
-            return HasConfig(defName) ? GetConfig(defName).IsIgnored : false;
+            return HasConfig(defName) ? !GetConfig(defName).IsIgnored : false;
         }
 
         #endregion

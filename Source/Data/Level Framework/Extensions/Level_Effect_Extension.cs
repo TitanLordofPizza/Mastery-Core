@@ -4,7 +4,7 @@ using Mastery.Core.Utility;
 
 namespace Mastery.Core.Data.Level_Framework.Extensions
 {
-    public class Level_Effect_Extension : DefModExtension, IExposable, ILevel_Base
+    public class Level_Effect_Extension : DefModExtension, IExposable, ILevel_Base, IDuplicable<Level_Effect_Extension>
     {
         public UtilityCurve titleCurve;
         public UtilityCurve TitleCurve { get => titleCurve; set => titleCurve = value; }
@@ -32,6 +32,24 @@ namespace Mastery.Core.Data.Level_Framework.Extensions
         public float ExpCalculated(int Level)
         {
             return ExpCurve.Evaluate(Level);
+        }
+
+        public void CopyTo(Level_Effect_Extension target)
+        {
+            target.titleCurve = titleCurve.Duplicate();
+
+            target.expCurve = expCurve.Duplicate();
+
+            target.isIgnored = isIgnored;
+        }
+
+        public Level_Effect_Extension Duplicate()
+        {
+            var duplicate = new Level_Effect_Extension();
+
+            CopyTo(duplicate);
+
+            return duplicate;
         }
     }
 }

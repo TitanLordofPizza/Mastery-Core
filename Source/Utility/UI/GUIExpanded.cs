@@ -10,9 +10,9 @@ namespace Mastery.Core.Utility.UI
         public const float mediumUISpacing = 22.5f;
         public const float largeUISpacing = 30f;
 
-        public static void Foldout(Listing_Standard standard, string title, ref bool isExpanded)
+        public static void Foldout(Listing_Standard standard, string title, ref bool isCollapsed)
         {
-            string foldoutState = isExpanded ? "v" : ">";
+            string foldoutState = isCollapsed ? ">" : "v";
 
             var foldoutSize = Text.CalcSize(foldoutState);
             var rect = standard.GetRect(foldoutSize.y);
@@ -24,7 +24,7 @@ namespace Mastery.Core.Utility.UI
 
             if (Widgets.ButtonText(foldoutRect, foldoutState, false) == true)
             {
-                isExpanded = !isExpanded;
+                isCollapsed = !isCollapsed;
             }
 
             Widgets.LabelFit(titleRect, title);

@@ -7,7 +7,7 @@ using Mastery.Core.Utility.UI;
 
 namespace Mastery.Core.Utility
 {
-    public class UtilityCurve : IExposable
+    public class UtilityCurve : IExposable, IDuplicable<UtilityCurve>
     {
         public SimpleCurve Curve;
         public bool Percentage; //Only Used for the Value not the Point.
@@ -29,6 +29,32 @@ namespace Mastery.Core.Utility
         public float Evaluate(float x, int decimalPoint = 2)
         {
             return Math.RoundUp(Curve.Evaluate(x), decimalPoint);
+        }
+
+        public void CopyTo(UtilityCurve target)
+        {
+            var curve = new SimpleCurve();
+
+            if (Curve?.Points != null)
+            {
+                foreach (var point in Curve.Points)
+                {
+                    curve.Add(new CurvePoint(point.x, point.y));
+                }
+            }
+
+            target.Curve = curve;
+
+            target.Percentage = Percentage;
+        }
+
+        public UtilityCurve Duplicate()
+        {
+            var duplicate = new UtilityCurve();
+
+            CopyTo(duplicate);
+
+            return duplicate;
         }
 
         #region UI

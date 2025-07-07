@@ -10,7 +10,7 @@ using Mastery.Core.Settings.Level_Framework.Base;
 
 namespace Mastery.Core.Settings.Level_Framework.Defs
 {
-    public class Def_Level_Settings<TComp, TDef> : Level_Settings where TComp : Level_Comp where TDef : LevelDef
+    public class Def_Level_Settings<TComp, TDef> : Level_Settings where TComp : Level_Comp where TDef : LevelDef, IDuplicable<TDef>
     {
         public Dictionary<string, Level_Config<TDef>> Configs = new Dictionary<string, Level_Config<TDef>>();
         public Dictionary<string, TDef> tempDefs = new Dictionary<string, TDef>();
@@ -43,13 +43,17 @@ namespace Mastery.Core.Settings.Level_Framework.Defs
 
             if (defName.NullOrEmpty() == false)
             {
-                Level_Config<TDef> configValue = null;
-                Configs?.TryGetValue(defName, out configValue);
+                Level_Config<TDef> config = null;
+                Configs?.TryGetValue(defName, out config);
 
-                if (configValue != null && configValue.Override == true)
-                    def = configValue.Value;
+                if (config?.Value != null && config.Override == true)
+                {
+                    def = config.Value;
+                }
                 else
+                {
                     tempDefs?.TryGetValue(defName, out def);
+                }
             }
 
             return def;
@@ -64,7 +68,7 @@ namespace Mastery.Core.Settings.Level_Framework.Defs
         {
             var config = GetConfig(defName);
 
-            if(config != null)
+            if (config != null)
             {
                 return config.LabelCap == null ? base.GetLabelCap(defName) : config.LabelCap;
             }
@@ -99,15 +103,16 @@ namespace Mastery.Core.Settings.Level_Framework.Defs
 
         public bool ActiveOnThing(ThingWithComps thing, string defName, out TComp comp)
         {
+            var activeOnThing = ActiveOnThing(thing, out comp);
+
             if (ActiveConfig(defName) == true)
-                if (ActiveOnThing(thing, out comp) == true)
-                    return true;
-            return ActiveOnThing(thing, out comp);
+                return activeOnThing;
+            return false;
         }
 
         public bool ActiveConfig(string defName)
         {
-            return HasConfig(defName) ? GetConfig(defName).IsIgnored : false;
+            return HasConfig(defName) ? !GetConfig(defName).IsIgnored : false;
         }
 
         #endregion

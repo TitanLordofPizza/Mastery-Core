@@ -1,10 +1,9 @@
-﻿using Verse;
-
-using Mastery.Core.Utility;
+﻿using Mastery.Core.Utility;
+using Verse;
 
 namespace Mastery.Core.Data.Level_Framework.Defs
 {
-    public class LevelDef : Def, ILevel_Base
+    public class LevelDef : Def, ILevel_Base, IDuplicable<LevelDef>
     {
         public UtilityCurve titleCurve;
         public UtilityCurve TitleCurve { get => titleCurve; set => titleCurve = value; }
@@ -23,6 +22,24 @@ namespace Mastery.Core.Data.Level_Framework.Defs
         public float ExpCalculated(int Level)
         {
             return ExpCurve.Evaluate(Level);
+        }
+
+        public void CopyTo(LevelDef target)
+        {
+            target.titleCurve = titleCurve.Duplicate();
+
+            target.expCurve = expCurve.Duplicate();
+
+            target.isIgnored = isIgnored;
+        }
+
+        public LevelDef Duplicate()
+        {
+            var duplicate = new LevelDef();
+
+            CopyTo(duplicate);
+
+            return duplicate;
         }
     }
 }
