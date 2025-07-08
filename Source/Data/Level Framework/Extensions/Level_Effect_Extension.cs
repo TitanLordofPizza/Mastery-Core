@@ -26,7 +26,7 @@ namespace Mastery.Core.Data.Level_Framework.Extensions
 
         public string MasteryCalculated(int Level, float Exp)
         {
-            return $"Level: {Level}({Exp}/{ExpCalculated(Level)}) " + $"Mastery_Core_Level_Title{(int)TitleCurve.Evaluate(Level)}".Translate(); //Right after this would be the title
+            return $"Level: {Level} ({Exp}/{ExpCalculated(Level)}) " + $"Mastery_Core_Level_Title{(int)TitleCurve.Evaluate(Level)}".Translate(); //Right after this would be the title
         }
 
         public float ExpCalculated(int Level)
