@@ -5,8 +5,27 @@ using System;
 
 namespace Mastery.Core.Utility
 {
-    public static class ClassCopy
+    public static class ClassUtility
     {
+        public static T GetRecursiveField<T>(object value, string[] fields)
+        {
+            object fieldValue = value;
+
+            foreach (var field in fields)
+            {
+                fieldValue = fieldValue.GetType().GetField(field).GetValue(fieldValue);
+            }
+
+            return (T)fieldValue;
+        }
+
+        public static T GetField<T>(object value, string field)
+        {
+            return (T)value.GetType().GetField(field).GetValue(value);
+        }
+
+        #region Class Copy
+
         public static T CopyClass<T>(T obj)
         {
             var objectCopy = ObjectCopy(obj);
@@ -105,5 +124,7 @@ namespace Mastery.Core.Utility
         {
             return !type.IsAbstract && type.GetConstructor(Type.EmptyTypes) != null;
         }
+
+        #endregion
     }
 }

@@ -4,8 +4,9 @@
 	<author>Titan Lord of Pizza</author>
 	<supportedVersions>
 		<li>1.5</li>
+		<li>1.6</li>
 	</supportedVersions>
-	<modVersion>0.0.4</modVersion>
+	<modVersion>0.0.5</modVersion>
 	<packageId>Mastery.Core</packageId>
 	<description>Mastery Core is a modular(ish) framework created to help create Mastery Related Mods.</description>
 	<url>https://github.com/TitanLordofPizza/Mastery-Core/releases/latest</url>
