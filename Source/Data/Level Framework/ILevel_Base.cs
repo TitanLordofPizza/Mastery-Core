@@ -9,8 +9,12 @@ namespace Mastery.Core.Data.Level_Framework
 
         bool IsIgnored { get; set; } //This is to determine if the Item is Ignored.
 
+        string MasteryTranslation { get; set; } //This is whatever Translation Mastery Core will use when Mastery is Calculated.
+
         string MasteryCalculated(int Level, float Exp);
 
         float ExpCalculated(int Level);
+
+        float CalculateField(string Field, int Level, float Base);
     }
 }

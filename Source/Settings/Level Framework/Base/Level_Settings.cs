@@ -11,6 +11,8 @@ namespace Mastery.Core.Settings.Level_Framework.Base
 
         public bool Active = true; //Is this Level Settings Enabled?
 
+        public bool TabActive = false; // Is This Level Systems Tabs Enabled?
+
         public Level_Action_Extension ActionBase;
 
         public virtual ILevel_Base IGetConfig(string defName)
@@ -31,6 +33,7 @@ namespace Mastery.Core.Settings.Level_Framework.Base
         public virtual void ExposeData()
         {
             Scribe_Values.Look(ref Active, "active");
+            Scribe_Values.Look(ref TabActive, "tabActive");
 
             Scribe_Deep.Look(ref ActionBase, "action");
         }

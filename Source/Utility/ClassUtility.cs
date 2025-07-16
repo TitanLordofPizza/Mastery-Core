@@ -102,8 +102,7 @@ namespace Mastery.Core.Utility
 
                     var newCurve = new UtilityCurve()
                     {
-                        Curve = new Verse.SimpleCurve(),
-                        Percentage = oldCurve.Percentage
+                        Curve = new Verse.SimpleCurve()
                     };
 
                     foreach (var point in oldCurve.Curve.Points)

@@ -17,7 +17,7 @@ namespace Mastery.Core.Data.Level_Framework.Data.Extensions
 
         public override string Description()
         {
-            return base.Description() + Math.RoundUp(Value, 2);
+            return base.Description() + MathUtility.RoundUp(Value, 2);
         }
     }
 }

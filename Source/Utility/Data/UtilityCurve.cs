@@ -10,6 +10,7 @@ namespace Mastery.Core.Utility
     public class UtilityCurve : IExposable, IDuplicable<UtilityCurve>
     {
         public SimpleCurve Curve;
+
         public bool Percentage; //Only Used for the Value not the Point.
 
         public float MinX => Curve.Points[0].x;
@@ -28,7 +29,7 @@ namespace Mastery.Core.Utility
 
         public float Evaluate(float x, int decimalPoint = 2)
         {
-            return Math.RoundUp(Curve.Evaluate(x), decimalPoint);
+            return MathUtility.RoundUp(Curve.Evaluate(x), decimalPoint);
         }
 
         public void CopyTo(UtilityCurve target)
@@ -80,7 +81,7 @@ namespace Mastery.Core.Utility
                     var valueSuffix = Percentage ? "%" : "";
 
                     Vector2 inclosedRange = new Vector2(Curve.Points[0].x / Curve.Points[Curve.PointsCount - 1].x, Curve.Points[0].y / Curve.Points[Curve.PointsCount - 1].y);
-                    var roundedCords = new Vector2(Math.RoundUp(mouseCurveCoords.x, decimalPoints), Math.RoundUp(mouseCurveCoords.y, decimalPoints));
+                    var roundedCords = new Vector2(MathUtility.RoundUp(mouseCurveCoords.x, decimalPoints), MathUtility.RoundUp(mouseCurveCoords.y, decimalPoints));
 
                     List<FloatMenuOption> options = new List<FloatMenuOption>
                     {

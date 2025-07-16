@@ -34,5 +34,10 @@ namespace Mastery.Core.Data.Level_Framework.Comps
 
             return actionKeys;
         }
+
+        public float CalculateField(string LevelKey, string Entry, string Field, float Base)
+        {
+            return Comps[LevelKey].CalculateField(Entry, Field, Base);
+        }
     }
 }

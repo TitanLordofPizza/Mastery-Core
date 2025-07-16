@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-
-using UnityEngine;
-using RimWorld;
-using Verse;
-
-using Mastery.Core.Settings.Level_Framework;
-using Mastery.Core.Data.Level_Framework.Data;
+﻿using Mastery.Core.Data.Level_Framework.Data;
 using Mastery.Core.Data.Level_Framework.Data.Extensions;
 using Mastery.Core.Data.Level_Framework.Extensions;
+using Mastery.Core.Settings.Level_Framework;
+using Mastery.Core.UI.Tabs;
+using Mastery.Core.Utility;
+using RimWorld;
+using RimWorld.Planet;
+using System.Collections.Generic;
+using UnityEngine;
+using Verse;
 
 namespace Mastery.Core.Data.Level_Framework.Comps
 {
@@ -16,6 +17,8 @@ namespace Mastery.Core.Data.Level_Framework.Comps
         #region Data
 
         public virtual string LevelKey => "Level"; //Key for what LevelType it is.
+
+        public virtual IMastery_Tab Tab => null; //The Tab It Will Have In Mastery Tab If Any At All.
 
         public virtual SimpleCurve generationLevelCurve => new SimpleCurve
                     {
@@ -40,11 +43,13 @@ namespace Mastery.Core.Data.Level_Framework.Comps
             {
                 Entries.Add(defName, new Level_Data()
                 {
-                    Level = 0,
+                    level = 0,
 
-                    Exp = 0,
+                    exp = 0,
 
-                    Extensions = new Dictionary<string, Level_Data_Extension>()
+                    passion = 0,
+
+                    extensions = new Dictionary<string, Level_Data_Extension>()
                 });
             }
 
@@ -80,17 +85,17 @@ namespace Mastery.Core.Data.Level_Framework.Comps
 
                     var config = Level_Settings_Manager.Instances[LevelKey].IGetConfig(entryKey);
 
-                    entry.Level = (int)(config.ExpCurve.MaxX * Rand.ByCurve(generationLevelCurve));
+                    entry.level = (int)(config.ExpCurve.MaxX * Rand.ByCurve(generationLevelCurve));
 
                     if (majorPassions > 0)
                     {
-                        entry.Passion = Passion.Major;
+                        entry.passion = Passion.Major;
 
                         majorPassions--;
                     }
                     else if (minorPassions > 0)
                     {
-                        entry.Passion = Passion.Minor;
+                        entry.passion = Passion.Minor;
 
                         minorPassions--;
                     }
@@ -111,19 +116,19 @@ namespace Mastery.Core.Data.Level_Framework.Comps
 
             var config = Level_Settings_Manager.Instances[LevelKey].IGetConfig(def.defName); //Get Config.
 
-            entry.Exp += (action.ExpGainCurve.Evaluate(entry.Level) * multiplier) * (1 + (entry.Passion == 0 ? 0 : 0.1f * (int)entry.Passion)); //Add Experience.
+            entry.exp = MathUtility.OperateFloat(entry.exp, action.expGainCurve.Evaluate(entry.level) * multiplier * (1 + (0.1f * (int)entry.passion)), action.expGainType); //Add Experience.
 
             while (true)
             {
-                var evaluation = config.ExpCalculated(entry.Level); //Get Required Exp.
+                var evaluation = config.ExpCalculated(entry.level); //Get Required Exp.
 
-                if (entry.Level < config.ExpCurve.MaxX) //Can it use the Exp?
+                if (entry.level < config.ExpCurve.MaxX) //Can it use the Exp?
                 {
-                    if (entry.Exp >= evaluation) // Does it have Enough Exp?
+                    if (entry.exp >= evaluation) // Does it have Enough Exp?
                     {
-                        entry.Level++; //Level Up.
+                        entry.level++; //Level Up.
 
-                        entry.Exp = Mathf.Min(entry.Exp - evaluation); //Take away Used Exp.
+                        entry.exp = Mathf.Min(entry.exp - evaluation); //Take away Used Exp.
 
                         leveledUp = true;
                     }
@@ -141,6 +146,11 @@ namespace Mastery.Core.Data.Level_Framework.Comps
             return leveledUp;
         }
 
+        public float CalculateField(string Entry, string Field, float Base)
+        {
+            return Level_Settings_Manager.Instances[LevelKey].IGetConfig(Entry).CalculateField(Field, GetOrAdd(Entry).level, Base);
+        }
+
         public override void Initialize(CompProperties props)
         {
             base.Initialize(props);
@@ -152,7 +162,7 @@ namespace Mastery.Core.Data.Level_Framework.Comps
         {
             base.PostExposeData();
 
-            Scribe_Collections.Look(ref Entries, "entries", LookMode.Value, LookMode.Deep);
+            Scribe_Collections.Look(ref Entries, $"{LevelKey}entries", LookMode.Value, LookMode.Deep);
 
             if (Entries == null)
                 Entries = new Dictionary<string, Level_Data>();
@@ -162,19 +172,24 @@ namespace Mastery.Core.Data.Level_Framework.Comps
 
         #region UI
 
+        public bool HasTab()
+        {
+            return Tab != null && Level_Settings_Manager.Instances[LevelKey].Active == true && Level_Settings_Manager.Instances[LevelKey].TabActive == true;
+        }
+
         public string GetDescription(string defName, bool Mastery = false)
         {
             var entry = GetOrAdd(defName);
 
             var settings = Level_Settings_Manager.Instances[LevelKey];
 
-            var description = settings.GetLabelCap(defName) + (Mastery == false ? "" : $" - {settings.IGetConfig(defName).MasteryCalculated(entry.Level, entry.Exp)}");
+            var description = settings.GetLabelCap(defName) + (Mastery == false ? "" : $" - {settings.IGetConfig(defName).MasteryCalculated(entry.level, entry.exp)}");
 
             description += "\n\n";
 
-            foreach (var key in entry.Extensions.Keys)
+            foreach (var key in entry.extensions.Keys)
             {
-                description += entry.Extensions[key].Description();
+                description += entry.extensions[key].Description();
             }
 
             return description;

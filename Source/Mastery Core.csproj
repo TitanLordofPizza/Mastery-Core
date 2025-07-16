@@ -88,19 +88,22 @@
     <Compile Include="Data\Level Framework\Extensions\Level_Action_Extension.cs" />
     <Compile Include="Data\Level Framework\Extensions\Level_Effect_Extension.cs" />
     <Compile Include="Data\Level Framework\ILevel_Base.cs" />
+    <Compile Include="Data\Level Framework\StatParts\Mastery_StatPart.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Settings\Level Framework\Base\Level_Settings.cs" />
     <Compile Include="Settings\Level Framework\Defs\Def_Level_Settings.cs" />
     <Compile Include="Settings\Level Framework\Extensions\Extension_Level_Settings.cs" />
     <Compile Include="Settings\Level Framework\Level_Config.cs" />
     <Compile Include="Settings\Level Framework\Level_Settings_Manager.cs" />
-    <Compile Include="UI\Level Framework\LevelUI.cs" />
+    <Compile Include="UI\Tabs\IMastery_Tab.cs" />
+    <Compile Include="UI\Tabs\Mastery_ITab.cs" />
+    <Compile Include="Utility\Data\CacheUtility.cs" />
     <Compile Include="Utility\ClassUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\IDuplicable.cs" />
-    <Compile Include="Utility\Math.cs" />
+    <Compile Include="Utility\MathUtility.cs" />
     <Compile Include="Utility\UI\FieldWindow.cs" />
-    <Compile Include="Utility\UI\GUIExpanded.cs" />
+    <Compile Include="Utility\UI\UIUtility.cs" />
     <Compile Include="Utility\Data\UtilityCurve.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+	<Mastery_Tab>Mastery</Mastery_Tab>
+
 	<Mastery_Core_Level_Title0>Barely heard of it</Mastery_Core_Level_Title0>
 	<Mastery_Core_Level_Title1>Utter Beginner</Mastery_Core_Level_Title1>
 	<Mastery_Core_Level_Title2>Beginner</Mastery_Core_Level_Title2>
@@ -22,5 +24,10 @@
 	<Mastery_Core_Level_Title18>Planet-Known Master</Mastery_Core_Level_Title18>
 	<Mastery_Core_Level_Title19>Planet-Leading Master</Mastery_Core_Level_Title19>
 	<Mastery_Core_Level_Title20>Legendary Master</Mastery_Core_Level_Title20>
+	
+	<Mastery_Core_Additive>Additive</Mastery_Core_Additive>
+	<Mastery_Core_Subtractive>Subtractive</Mastery_Core_Subtractive>
+	<Mastery_Core_Multiplicative>Multiplicative</Mastery_Core_Multiplicative>
+	<Mastery_Core_Divisive>Divisive</Mastery_Core_Divisive>
 	
 </LanguageData>

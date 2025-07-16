@@ -9,23 +9,23 @@ namespace Mastery.Core.Data.Level_Framework.Data
 {
     public class Level_Data : IExposable
     {
-        public int Level;
+        public int level;
 
-        public float Exp;
+        public float exp;
 
-        public Passion Passion;
+        public Passion passion;
 
-        public Dictionary<string, Level_Data_Extension> Extensions;
+        public Dictionary<string, Level_Data_Extension> extensions;
 
         public void ExposeData()
         {
-            Scribe_Values.Look(ref Level, "level");
+            Scribe_Values.Look(ref level, "level");
 
-            Scribe_Values.Look(ref Exp, "exp");
+            Scribe_Values.Look(ref exp, "exp");
 
-            Scribe_Values.Look(ref Passion, "passion");
+            Scribe_Values.Look(ref passion, "passion");
 
-            Scribe_Collections.Look(ref Extensions, "extensions", LookMode.Value, LookMode.Deep);
+            Scribe_Collections.Look(ref extensions, "extensions", LookMode.Value, LookMode.Deep);
         }
     }
 }
