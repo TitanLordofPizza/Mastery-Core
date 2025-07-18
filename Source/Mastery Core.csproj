@@ -85,6 +85,7 @@
     <Compile Include="Data\Level Framework\Data\Extensions\Level_Data_Int.cs" />
     <Compile Include="Data\Level Framework\Data\Level_Data.cs" />
     <Compile Include="Data\Level Framework\Defs\LevelDef.cs" />
+    <Compile Include="Data\Level Framework\Action_Manager.cs" />
     <Compile Include="Data\Level Framework\Extensions\Level_Action_Extension.cs" />
     <Compile Include="Data\Level Framework\Extensions\Level_Effect_Extension.cs" />
     <Compile Include="Data\Level Framework\ILevel_Base.cs" />

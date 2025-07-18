@@ -11,6 +11,7 @@ using Mastery.Core.Settings.Level_Framework;
 
 namespace Mastery.Core.Utility.UI
 {
+    [StaticConstructorOnStartup]
     public static class UIUtility
     {
         public const float tinyUISpacing = 8;
@@ -78,8 +79,7 @@ namespace Mastery.Core.Utility.UI
             TabDrawer.DrawTabs(rect, tabs);
         }
 
-        private static Texture2D SkillBarBackgroundTex = SolidColorMaterials.NewSolidColorTexture(new Color(1f, 1f, 1f, 0.05f));
-        private static Texture2D SkillBarFillTex = SolidColorMaterials.NewSolidColorTexture(new Color(1f, 1f, 1f, 0.05f));
+        private static Texture2D SkillBarFillTex = SolidColorMaterials.NewSolidColorTexture(new Color(1f, 1f, 1f, 0.1f));
 
         public static void LevelInfo(Listing_Standard standard, string defName, Level_Comp comp, float labelCapWidth)
         {
@@ -97,8 +97,7 @@ namespace Mastery.Core.Utility.UI
 
             if (comp.Entries[defName].passion > 0)
             {
-                Texture2D image = ((comp.Entries[defName].passion == Passion.Major) ? SkillUI.PassionMajorIcon : SkillUI.PassionMinorIcon);
-                GUI.DrawTexture(passionRect, image);
+                GUI.DrawTexture(passionRect, (comp.Entries[defName].passion == Passion.Major) ? SkillUI.PassionMajorIcon : SkillUI.PassionMinorIcon);
             }
 
             var config = Level_Settings_Manager.Instances[comp.LevelKey].IGetConfig(defName);
@@ -106,9 +105,9 @@ namespace Mastery.Core.Utility.UI
             splitRect.SplitVerticallyWithMargin(out Rect barRect, out splitRect, out _, 0, rightWidth: mediumUISpacing);
             barRect.height = mediumUISpacing;
 
-            Widgets.FillableBar(barRect, comp.Entries[defName].exp / config.ExpCalculated(comp.Entries[defName].level), SkillBarFillTex, SkillBarBackgroundTex, doBorder: true);
+            Widgets.FillableBar(barRect, comp.Entries[defName].exp / config.ExpCalculated(comp.Entries[defName].level), SkillBarFillTex, null, doBorder: false);
 
-            Rect levelRect = new Rect(barRect.xMin + smallUISpacing, inRect.y, 999f, inRect.height);
+            Rect levelRect = new Rect(barRect.xMin + tinyUISpacing, inRect.y, 999f, inRect.height);
             levelRect.yMin += 3f;
 
             Widgets.Label(levelRect, comp.Entries[defName].level.ToString());

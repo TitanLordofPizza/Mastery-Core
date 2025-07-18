@@ -32,7 +32,7 @@ namespace Mastery.Core.Settings.Level_Framework.Defs
             tempDefs?.Add(def.defName, def);
         }
 
-        public bool HasConfig(string defName)
+        public override bool HasConfig(string defName)
         {
             return Configs?.ContainsKey(defName) == true;
         }
@@ -80,39 +80,14 @@ namespace Mastery.Core.Settings.Level_Framework.Defs
 
         #region Active
 
-        public bool ActiveOnThing(ThingWithComps thing)
-        {
-            return Active && thing != null && thing.HasComp<Level_Comp_Manager>() && thing.GetComp<Level_Comp_Manager>().Comps.ContainsKey(LevelKey);
-        }
-
         public bool ActiveOnThing(ThingWithComps thing, out TComp comp)
         {
-            var state = ActiveOnThing(thing);
-
-            if (state == true)
-            {
-                comp = thing.GetComp<Level_Comp_Manager>().Comps[LevelKey] as TComp;
-            }
-            else
-            {
-                comp = null;
-            }
-
-            return state;
+            return ActiveOnThing<TComp>(thing, out comp);
         }
 
         public bool ActiveOnThing(ThingWithComps thing, string defName, out TComp comp)
         {
-            var activeOnThing = ActiveOnThing(thing, out comp);
-
-            if (ActiveConfig(defName) == true)
-                return activeOnThing;
-            return false;
-        }
-
-        public bool ActiveConfig(string defName)
-        {
-            return HasConfig(defName) ? !GetConfig(defName).IsIgnored : false;
+            return ActiveOnThing<TComp>(thing, defName, out comp);
         }
 
         #endregion

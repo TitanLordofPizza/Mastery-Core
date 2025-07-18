@@ -1,14 +1,15 @@
-﻿using Mastery.Core.Data.Level_Framework.Data;
+﻿using System.Collections.Generic;
+
+using UnityEngine;
+using RimWorld;
+using Verse;
+
+using Mastery.Core.Utility;
+using Mastery.Core.Data.Level_Framework.Data;
 using Mastery.Core.Data.Level_Framework.Data.Extensions;
 using Mastery.Core.Data.Level_Framework.Extensions;
-using Mastery.Core.Settings.Level_Framework;
 using Mastery.Core.UI.Tabs;
-using Mastery.Core.Utility;
-using RimWorld;
-using RimWorld.Planet;
-using System.Collections.Generic;
-using UnityEngine;
-using Verse;
+using Mastery.Core.Settings.Level_Framework;
 
 namespace Mastery.Core.Data.Level_Framework.Comps
 {
@@ -162,7 +163,7 @@ namespace Mastery.Core.Data.Level_Framework.Comps
         {
             base.PostExposeData();
 
-            Scribe_Collections.Look(ref Entries, $"{LevelKey}entries", LookMode.Value, LookMode.Deep);
+            Scribe_Collections.Look(ref Entries, $"{LevelKey}_Entries", LookMode.Value, LookMode.Deep);
 
             if (Entries == null)
                 Entries = new Dictionary<string, Level_Data>();
@@ -174,7 +175,8 @@ namespace Mastery.Core.Data.Level_Framework.Comps
 
         public bool HasTab()
         {
-            return Tab != null && Level_Settings_Manager.Instances[LevelKey].Active == true && Level_Settings_Manager.Instances[LevelKey].TabActive == true;
+            return Tab != null && Level_Settings_Manager.Instances[LevelKey].Active == true
+                && Level_Settings_Manager.Instances[LevelKey].TabActive == true && Entries.Count > 0;
         }
 
         public string GetDescription(string defName, bool Mastery = false)

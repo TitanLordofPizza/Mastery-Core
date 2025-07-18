@@ -43,7 +43,7 @@ namespace Mastery.Core.Data.Level_Framework.StatParts
 
                 if (value != 0)
                 {
-                    return $"{field.Translate()}: {symbol}{value}";
+                    return $"{$"{LevelKey}_{field}".Translate()}: {symbol}{value}";
                 }
             }
 
