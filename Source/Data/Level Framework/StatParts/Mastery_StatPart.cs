@@ -25,10 +25,10 @@ namespace Mastery.Core.Data.Level_Framework.StatParts
 
         public override string ExplanationPart(StatRequest req)
         {
-            var config = Level_Settings_Manager.Instances[LevelKey].IGetConfig(req.Thing.def.defName);
-
             if (pawn != null)
             {
+                var config = Level_Settings_Manager.Instances[LevelKey].IGetConfig(req.Thing.def.defName);
+
                 var curve = ClassUtility.GetField<UtilityCurve>(config, $"{field}Curve");
 
                 var type = ClassUtility.GetField<OperationType>(config, $"{field}Type");

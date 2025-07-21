@@ -106,7 +106,10 @@ namespace Mastery.Core.Data.Level_Framework.Comps
 
         public virtual void ActionEvent(Def def, Level_Action_Extension action, Dictionary<string, object> states = null)
         {
-            GainExperience(def, action);
+            if (Level_Settings_Manager.Instances[LevelKey].ActiveOnThing(parent, def.defName) == true)  //Is Mastery enabled?
+            {
+                GainExperience(def, action);
+            }
         }
 
         public virtual bool GainExperience(Def def, Level_Action_Extension action, float multiplier = 1) //Adding Experience.
