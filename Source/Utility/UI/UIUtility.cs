@@ -19,24 +19,42 @@ namespace Mastery.Core.Utility.UI
         public const float mediumUISpacing = 24;
         public const float largeUISpacing = 32;
 
-        public static void Foldout(Listing_Standard standard, string title, ref bool isCollapsed)
+        public static void Foldout(Listing_Standard standard, string title, ref bool is_collapsed)
         {
-            string foldoutState = isCollapsed ? ">" : "v";
+            string foldout_state = is_collapsed ? ">" : "v";
 
-            var foldoutSize = Text.CalcSize(foldoutState);
-            var rect = standard.GetRect(foldoutSize.y);
+            var foldout_size = Text.CalcSize(foldout_state);
+            var rect = standard.GetRect(foldout_size.y);
 
-            var foldoutRect = new Rect();
-            var titleRect = new Rect();
+            rect.SplitVerticallyWithMargin(out Rect foldout_rect, out Rect title_rect, out _, tinyUISpacing, foldout_size.x);
 
-            rect.SplitVerticallyWithMargin(out foldoutRect, out titleRect, out _, tinyUISpacing, foldoutSize.x);
-
-            if (Widgets.ButtonText(foldoutRect, foldoutState, false) == true)
+            if (Widgets.ButtonText(foldout_rect, foldout_state, false) == true)
             {
-                isCollapsed = !isCollapsed;
+                is_collapsed = !is_collapsed;
             }
 
-            Widgets.LabelFit(titleRect, title);
+            Widgets.LabelFit(title_rect, title);
+        }
+
+        public static void Foldout_Checkbox(Listing_Standard standard, string title, string checkbox_title, ref bool is_collapsed, ref bool checkbox_value)
+        {
+            string foldout_state = is_collapsed ? ">" : "v";
+
+            var foldout_size = Text.CalcSize(foldout_state);
+            var rect = standard.GetRect(foldout_size.y);
+
+            rect.SplitVerticallyWithMargin(out Rect foldout_rect, out Rect title_rect, out _, tinyUISpacing, foldout_size.x);
+
+            title_rect.SplitVerticallyWithMargin(out title_rect, out Rect checkbox_rect, out _, tinyUISpacing, Text.CalcSize(title).x);
+
+            if (Widgets.ButtonText(foldout_rect, foldout_state, false) == true)
+            {
+                is_collapsed = !is_collapsed;
+            }
+
+            Widgets.LabelFit(title_rect, title);
+
+            Widgets.CheckboxLabeled(checkbox_rect, checkbox_title, ref checkbox_value);
         }
 
         public static void Dropdown(Listing_Standard standard, string title, int selectedOption, List<string> options, Action<int> onSelected)

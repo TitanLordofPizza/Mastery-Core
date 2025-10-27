@@ -21,8 +21,8 @@ namespace Mastery.Core.Data.Level_Framework.Extensions
 
         #region Toggles
 
-        public bool isIgnored;
-        public bool IsIgnored { get => isIgnored; set => isIgnored = value; }
+        public bool isEnabledByDefault = true;
+        public bool IsEnabledByDefault { get => isEnabledByDefault; set => isEnabledByDefault = value; }
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace Mastery.Core.Data.Level_Framework.Extensions
 
             Scribe_Deep.Look(ref expCurve, "expCurve");
 
-            Scribe_Values.Look(ref isIgnored, "isIgnored");
+            Scribe_Values.Look(ref isEnabledByDefault, "isIgnoredByDefault");
 
             Scribe_Values.Look(ref masteryTranslation, "masteryTranslation");
         }
@@ -71,7 +71,7 @@ namespace Mastery.Core.Data.Level_Framework.Extensions
 
             target.expCurve = expCurve.Duplicate();
 
-            target.isIgnored = isIgnored;
+            target.isEnabledByDefault = isEnabledByDefault;
 
             target.masteryTranslation = masteryTranslation;
         }

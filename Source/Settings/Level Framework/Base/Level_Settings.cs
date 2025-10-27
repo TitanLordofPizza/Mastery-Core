@@ -21,9 +21,9 @@ namespace Mastery.Core.Settings.Level_Framework.Base
             return null;
         }
 
-        public bool ActiveConfig(string defName)
+        public virtual bool ActiveConfig(string defName)
         {
-            return HasConfig(defName) ? !IGetConfig(defName).IsIgnored : false;
+            return false;
         }
 
         public virtual bool HasConfig(string defName)

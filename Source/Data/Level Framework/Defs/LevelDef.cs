@@ -20,8 +20,8 @@ namespace Mastery.Core.Data.Level_Framework.Defs
 
         #region Toggles
 
-        public bool isIgnored;
-        public bool IsIgnored { get => isIgnored; set => isIgnored = value; }
+        public bool isEnabledByDefault = true;
+        public bool IsEnabledByDefault { get => isEnabledByDefault; set => isEnabledByDefault = value; }
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace Mastery.Core.Data.Level_Framework.Defs
 
             target.expCurve = expCurve.Duplicate();
 
-            target.isIgnored = isIgnored;
+            target.isEnabledByDefault = isEnabledByDefault;
 
             target.masteryTranslation = masteryTranslation;
         }

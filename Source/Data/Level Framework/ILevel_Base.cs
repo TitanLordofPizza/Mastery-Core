@@ -7,7 +7,7 @@ namespace Mastery.Core.Data.Level_Framework
         UtilityCurve TitleCurve { get; set; } //This is which Title will be Shown Per Level.
         UtilityCurve ExpCurve { get; set; } //This is how much Exp is Required Per Level.
 
-        bool IsIgnored { get; set; } //This is to determine if the Item is Ignored.
+        bool IsEnabledByDefault { get; set; } //This is to determine if the Item is Enabled by Default.
 
         string MasteryTranslation { get; set; } //This is whatever Translation Mastery Core will use when Mastery is Calculated.
 

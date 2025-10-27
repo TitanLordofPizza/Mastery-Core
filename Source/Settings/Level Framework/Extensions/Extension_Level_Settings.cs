@@ -27,8 +27,11 @@ namespace Mastery.Core.Settings.Level_Framework.Extensions
                 {
                     Value = null,//It only really needs its value set if its been Overrriden
                                  //so we will only add the data when that happens(to save up space).
-                    Override = false
+                    Override = false,
+                    IsEnabled = false,
                 });
+
+                Configs[def.defName].IsEnabled = GetConfig(def.defName).isEnabledByDefault;
             }
 
             tempDefs?.Add(def.defName, def);
@@ -97,6 +100,11 @@ namespace Mastery.Core.Settings.Level_Framework.Extensions
         #endregion
 
         #region Active
+
+        public override bool ActiveConfig(string defName)
+        {
+            return HasConfig(defName) && Configs[defName].IsEnabled;
+        }
 
         public bool ActiveOnThing(ThingWithComps thing, out TComp comp)
         {
